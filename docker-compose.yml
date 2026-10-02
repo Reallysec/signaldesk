@@ -1,0 +1,128 @@
+# 交付包的 compose(scripts/build-release.sh 打包时改名为 docker-compose.yml,
+# 并把下面 APP_IMAGE_TAG 的默认值同步成包内版本)。
+#
+# 与 dev 的 docker-compose.yml 不同:app 服务用 **镜像 tag** 而非 build,
+# 这样 rst-update.sh 能在宿主 docker load 暂存镜像后,仅切换 .env 里的
+# APP_IMAGE_TAG 并重启即可上线新版本(在线更新)。
+#
+# 镜像名统一为 ghcr.io/reallysec/signaldesk:<版本>:交付包里 docker load 进来的、
+# 从 GHCR 拉的、在线更新加载的都是同一个名字,本地已有就不会去网上拉(离线主机可用)。
+#
+# 用法(交付包目录内,install.sh 会代做):
+#   cp .env.example .env    # 填 DB_PASSWORD / REDIS_PASSWORD / JWT_SECRET
+#   docker compose up -d
+# 在线更新安装:bash rst-update.sh
+#
+# data/ 走宿主 bind mount:release-store 把已验证暂存写到 data/release/,
+# 宿主上的 rst-update.sh 直接读它(current.json + staging/<sha>)。
+# 容器以 UID 65532 运行,data/ 与 uploads/ 须归它所有(install.sh 会 chown)。
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: signaldesk
+      POSTGRES_USER: signaldesk
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U signaldesk']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:?set REDIS_PASSWORD in .env}
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', '-a', '${REDIS_PASSWORD}', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    # 在线更新的核心:镜像 tag 由 rst-update.sh 在 .env 里切换。
+    image: ${IMAGE_REPO:-ghcr.io/reallysec/signaldesk}:${APP_IMAGE_TAG:-1.1.0}
+    restart: unless-stopped
+    # 主机指纹(SEC-FP-1):2026-09-15 起容器 MAC(本地管理地址)不再进指纹,容器指纹由
+    # ./data/license/license.json 里的 install secret 承载 —— 所以 ./data 必须是持久卷,
+    # 丢了它等于换机,已绑定的激活作废(max_nodes 命中上限)。钉 MAC 保留,无害。
+    mac_address: '02:42:ac:1d:00:01'
+    # .env 里其余配置(S3_*、SMTP、SIGNALDESK_UPDATE_CHECK 等)原样传进容器,不用逐项列;
+    # 下面 environment 里列出的键以 environment 为准。
+    env_file:
+      - path: .env
+        required: false
+    ports:
+      - '${APP_PORT:-3000}:3000'
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: 3000
+      DATABASE_URL: postgresql://signaldesk:${DB_PASSWORD:?set DB_PASSWORD in .env}@postgres:5432/signaldesk
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env (openssl rand -hex 32)}
+      API_DOMAIN: ${API_DOMAIN:-http://localhost:3000}
+      WEBSITE_DOMAIN: ${WEBSITE_DOMAIN:-http://localhost:3000}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+      # 在线许可证(从环境注入,绝不硬编码进仓)。
+      RSTLIC_LICENSE_TOKEN: ${RSTLIC_LICENSE_TOKEN:-}
+      RSTLIC_SERVER_URL: ${RSTLIC_SERVER_URL:-https://license.reallysec.com}
+      # SMTP 主机默认只挡环回 / 链路本地，内网中继放行；宿主机本地 MTA 才需要设 1。
+      OUTBOUND_ALLOW_PRIVATE_SMTP: ${OUTBOUND_ALLOW_PRIVATE_SMTP:-0}
+      # 首次启动建管理员账号。建完请从 .env 里删掉这三行。
+      SEED_ON_BOOT: ${SEED_ON_BOOT:-0}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-}
+      # 附件默认落本地 ./uploads。多实例部署必须改用 S3/MinIO,否则附件会丢。
+      STORAGE_DRIVER: ${STORAGE_DRIVER:-local}
+      STORAGE_LOCAL_ROOT: /app/uploads
+    volumes:
+      # 暂存的 release 落到宿主 ./data/release,rst-update.sh 直接读;
+      # ./data/license 是激活状态与容器指纹,./uploads 是附件 —— 三者都要进备份。
+      - ./data:/app/data
+      - ./uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', '/nodejs/bin/node', '-e', "fetch('http://localhost:3000/api/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  # 每日 pg_dump 到 ./backups,保留 30 天;与 docker-compose.prod.yml 同一段。
+  # 还原步骤见 docs/operations.md。
+  pg-backup:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGHOST: postgres
+      PGUSER: signaldesk
+      PGPASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env}
+      PGDATABASE: signaldesk
+      BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-30}
+    volumes:
+      - ./backups:/backups
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        while true; do
+          FILENAME="/backups/signaldesk_$$(date +%Y%m%d_%H%M%S).sql.gz"
+          if pg_dump | gzip > "$$FILENAME"; then echo "[Backup] Done: $$FILENAME"; else echo "[Backup] FAILED: $$FILENAME"; rm -f "$$FILENAME"; fi
+          find /backups -name "*.sql.gz" -mtime +$${BACKUP_RETENTION_DAYS} -delete
+          sleep 86400
+        done
+
+volumes:
+  pg_data:
+  redis_data:

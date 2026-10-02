@@ -1,0 +1,101 @@
+name: Bug report
+description: Report a problem with SignalDesk
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug.
+
+        **Before you submit:** search the [existing issues](https://github.com/reallysec/signaldesk/issues) — duplicates are common.
+
+        **Reporting a security vulnerability?** Do not open an issue. [Follow the security policy](https://github.com/reallysec/signaldesk/security/policy) instead.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the problem. Screenshots or a screen recording help.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How do we reproduce it?
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Shown in Settings → Online update, or the `APP_IMAGE_TAG` value in `.env`.
+      placeholder: "1.1.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: edition
+    attributes:
+      label: Edition
+      options:
+        - Community
+        - Enterprise
+        - Trial
+    validations:
+      required: true
+
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: Deployment method
+      options:
+        - install.sh
+        - Delivery bundle (manual docker compose)
+        - GHCR image
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: The components involved.
+      value: |
+        Alert sources (SIEM / webhook / email):
+        AI provider and model (if relevant):
+        Host OS and Docker version:
+        Browser:
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: |
+        App logs: `docker compose logs app`. This is rendered as code, so no backticks are needed.
+        **Remove credentials, licence tokens, API keys, and personal data before pasting.**
+      render: shell
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's [Code of Conduct](https://github.com/reallysec/signaldesk/blob/main/CODE_OF_CONDUCT.md).
+          required: true

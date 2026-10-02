@@ -35,7 +35,7 @@
 
 ## Quick start
 
-You need a Linux host with Docker Engine 24+ and Compose v2; 2 CPU cores and 4 GB of memory are enough for a small team ([full requirements](https://reallysec.com/en/docs/signaldesk/install/system-requirements)).
+You need a Linux host with Docker Engine 24+ and Compose v2; 2 CPU cores, 4 GB of memory and 40 GB of disk are enough for a small team.
 
 ```bash
 curl -fsSL https://github.com/reallysec/signaldesk/releases/latest/download/install.sh | sudo bash
@@ -70,7 +70,7 @@ The same image is published as `ghcr.io/reallysec/signaldesk:<version>`. Take `d
 
 </details>
 
-HTTPS, reverse proxy, upgrade, backup and every `.env` key: [installation docs](https://reallysec.com/en/docs/signaldesk/install).
+HTTPS, reverse proxy, upgrade, backup and every `.env` key: [documentation](https://reallysec.com/en/docs/signaldesk).
 
 ## Features
 
@@ -120,7 +120,7 @@ Enterprise adds the automation layer: **multi-level escalation** (L1 → L2 → 
 | Multi-tenant / MSSP: customer tenants, tenant switching, cross-tenant views | — | ✅ |
 | Support | community | 24×7 |
 
-Assignment scoring and rule evaluation ship as encrypted modules; decryption keys are issued per host by the licence server. Details: [editions](https://reallysec.com/en/docs/signaldesk/editions) and [EDITIONS.md](EDITIONS.md). A 14-day trial unlocks every Enterprise feature: [console.reallysec.com](https://console.reallysec.com).
+Assignment scoring and rule evaluation ship as encrypted modules; decryption keys are issued per host by the licence server. Details: [EDITIONS.md](EDITIONS.md). A 14-day trial unlocks every Enterprise feature: [console.reallysec.com](https://console.reallysec.com).
 
 </details>
 

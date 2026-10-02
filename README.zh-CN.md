@@ -35,7 +35,7 @@
 
 ## 快速开始
 
-需要一台 Linux 主机（Docker Engine 24+、Compose v2）；小团队 2 核 4 GB 内存足够（[完整系统要求](https://reallysec.com/docs/signaldesk/install/system-requirements)）。
+需要一台 Linux 主机（Docker Engine 24+、Compose v2）；小团队 2 核 CPU、4 GB 内存、40 GB 磁盘足够。
 
 ```bash
 curl -fsSL https://github.com/reallysec/signaldesk/releases/latest/download/install.sh | sudo bash
@@ -70,7 +70,7 @@ docker compose up -d
 
 </details>
 
-HTTPS、反向代理、升级、备份与全部 `.env` 项：[安装文档](https://reallysec.com/docs/signaldesk/install)。
+HTTPS、反向代理、升级、备份与全部 `.env` 项：[文档](https://reallysec.com/docs/signaldesk)。
 
 ## 功能
 
@@ -120,7 +120,7 @@ HTTPS、反向代理、升级、备份与全部 `.env` 项：[安装文档](http
 | 多租户 / MSSP：客户租户、租户切换、跨租户视图 | — | ✅ |
 | 支持 | 社区 | 7×24 |
 
-分派打分与规则求值以加密模块交付，解密钥匙由许可服务器按主机签发。详见[版本说明](https://reallysec.com/docs/signaldesk/editions)与 [EDITIONS.zh-CN.md](EDITIONS.zh-CN.md)。可申请 14 天试用，试用期内企业版全部功能可用：[console.reallysec.com](https://console.reallysec.com)。
+分派打分与规则求值以加密模块交付，解密钥匙由许可服务器按主机签发。详见 [EDITIONS.zh-CN.md](EDITIONS.zh-CN.md)。可申请 14 天试用，试用期内企业版全部功能可用：[console.reallysec.com](https://console.reallysec.com)。
 
 </details>
 

@@ -1,6 +1,6 @@
 # SignalDesk — End User License Agreement
 
-Version 1.0 · Effective 2026-10-02
+Version 1.1 · Effective 2026-10-02
 
 This End User License Agreement (the "Agreement") is between Anhui Reallysec
 Information Technology Ltd. (安徽斯普朗克信息技术有限公司, "Reallysec") and the
@@ -11,7 +11,8 @@ behalf of an organization, you represent that you have the authority to bind
 that organization, and "you" refers to that organization.
 
 **Please read the sections in bold with particular care. They limit Reallysec's
-warranties and liability and restrict how you may use the Software.**
+warranties and liability, restrict how you may use the Software, and set out
+your responsibilities when you serve your own customers with it.**
 
 ## 1. Definitions
 
@@ -23,7 +24,12 @@ warranties and liability and restrict how you may use the Software.**
 - **"License"** means the license key or license file issued by Reallysec that
   specifies your edition, feature set, node count, user count, and term.
 - **"Edition"** means the Community or Enterprise edition, or a trial. The
-  Enterprise edition and trials are stated in your License; the Community Edition is the Software used without a License.
+  Enterprise edition and trials are stated in your License; the Community
+  Edition is the Software used without a License.
+- **"Enterprise Features"** means the features available only under a License,
+  including those delivered as sealed modules.
+- **"Subscription Term"** means the term of a paid License stated in your
+  License or Order.
 - **"User"** means an active account in the Software other than a customer
   portal account. Customer portal accounts, and deactivated or deleted accounts,
   are not counted as Users.
@@ -31,6 +37,8 @@ warranties and liability and restrict how you may use the Software.**
   you acquired the License.
 - **"Your Data"** means the tickets, alerts, and other data that the Software
   processes on your behalf.
+- **"Your Customers"** means the third parties to whom you provide managed
+  services using a multi-tenant Edition.
 
 ## 2. License Grant
 
@@ -42,38 +50,56 @@ permits, and limited to the features of your Edition. Your employees and
 contractors may use the Software on your behalf; you are responsible for their
 compliance with this Agreement.
 
+You may run the Software on your own hardware or on infrastructure that you
+control and that a cloud or hosting provider operates on your behalf, provided
+the provider does not use the Software for its own purposes.
+
 Where your Edition includes multi-tenancy, "internal business operations"
-includes delivering managed security or IT services to your own customers,
-including giving them customer portal accounts.
+includes delivering managed security or IT services to Your Customers,
+including giving them customer portal accounts. **You are solely responsible for
+the services you provide to Your Customers, for your agreements with them, and
+for their use of the Software. You will indemnify Reallysec against claims
+brought by Your Customers that arise from those services, except to the extent
+the claim is caused by Reallysec's breach of this Agreement.**
 
 A trial License grants the same rights for evaluation only, for the trial period
 stated in the License.
 
 Without a License, Reallysec grants you the same license free of charge and
 without a fixed term, limited to the features of the Community Edition, five
-(5) Users, and one node. Reallysec may change the features of the Community
-Edition in later versions of the Software.
+(5) Users, and one node. Within these limits the Community Edition may be used
+for commercial purposes, but only for your own internal business operations.
+Reallysec may change the features of the Community Edition in later versions of
+the Software.
 
 ## 3. Restrictions
 
 **You must not, and must not permit any third party to:**
 
-1. **move, change, disable, or circumvent the license key functionality, or
-   remove or obscure any functionality protected by the license key;**
+1. **bypass, disable, tamper with, or interfere with the License checks, the
+   license key, or the mechanisms that keep Enterprise Features locked, or use
+   any Enterprise Feature that your License does not cover;**
 2. **decrypt, decompile, disassemble, or reverse engineer the sealed feature
    modules or any other part of the Software, except to the extent applicable
    law expressly permits despite this restriction;**
-3. **except as Section 2 permits for multi-tenant Editions, provide the Software
-   to third parties as a hosted or managed service, or otherwise give third
-   parties access to a substantial set of its features;**
+3. **offer the Software, or a substantial part of its functionality, to third
+   parties as a hosted, managed, or software-as-a-service offering, except as
+   Section 2 permits for multi-tenant Editions;**
 4. **sell, rent, lease, lend, sublicense, distribute, or otherwise transfer the
    Software or the License, except as Reallysec agrees in writing;**
 5. **share one License across more nodes, Users, hosts, or organizations than
    it permits;**
-6. **remove, alter, or obscure any copyright, trademark, license, or other
-   notice in the Software;**
-7. **use the Software in violation of applicable law, including export control
+6. **delete, change, or hide any copyright, trademark, or licensing notice in
+   the Software;**
+7. **use the Software, or information obtained from its sealed modules,
+   Documentation, or non-public behaviour, to build or help others build a
+   product or service that competes with the Software;**
+8. **use the Software in violation of applicable law, including export control
    and data protection laws.**
+
+You may run benchmarks and performance tests of the Software. If you publish
+the results, you must also publish the Software version, the configuration,
+and the test method, so that others can reproduce them.
 
 ## 4. Ownership
 
@@ -106,9 +132,27 @@ you are responsible for it, including under applicable data protection laws.
 - **Language models.** The Software sends prompts, which may include portions of
   Your Data, to the language-model endpoints you configure. Those endpoints are
   provided by you or your chosen provider under their own terms; Reallysec does
-  not receive that data.
+  not receive that data. **Output generated with language models may be
+  incomplete or wrong, and the same input may produce different output. A
+  qualified person must review AI-generated analysis, reports, and suggested
+  actions before you act on them. You are responsible for your agreement with
+  the model provider and for complying with the laws that apply to sending data
+  to it, including personal information protection and cross-border data
+  transfer rules.**
+- **Support access.** If you give Reallysec access to your environment or to
+  Your Data for support, Reallysec will use that access only to provide the
+  support you requested, will treat Your Data as confidential under Section 12,
+  and will not keep copies after the support is complete unless you agree.
 
-## 7. Updates, Support, and Preview Features
+## 7. License Checks, Updates, Support, and Preview Features
+
+**A paid or trial License is checked when it is activated and, for online
+activation, periodically afterward. If a check fails and is not resolved within
+the grace period, or if the License expires or is revoked, the Enterprise
+Features stop working and the Software continues as the Community Edition,
+subject to its limits. Your Data is not deleted and you can still read and
+export it. Records created with Enterprise Features remain in your database,
+but those features cannot be used again until a valid License is applied.**
 
 Reallysec may provide updates during the term of your License, and for the
 Community Edition at its discretion. Support, service levels, and maintenance
@@ -123,23 +167,27 @@ at any time, and Section 9.1 does not apply to them.
 At Reallysec's written request, no more than once in any twelve (12) month
 period, you will provide within thirty (30) days a written statement, signed by
 an authorized representative, of the number of nodes on which the Software is
-installed, the number of Users, and the Edition in use. If the statement shows
-use beyond your License, you will pay the applicable fees for the excess use
-under Reallysec's then-current price list.
+installed, the number of Users, and the Edition in use. Reallysec may also rely
+on the activation records held by its license service. If the verification
+shows use beyond your License, you will pay the applicable fees for the excess
+use under Reallysec's then-current price list, and if the excess is more than
+five percent (5%), you will also reimburse Reallysec's reasonable costs of the
+verification.
 
 ## 9. Warranty
 
 ### 9.1 Limited warranty
 
-For a paid License, Reallysec warrants that for ninety (90) days from the date
-the License is first issued, the Software will perform substantially as
-described in the Documentation. If it does not, and you notify Reallysec within
-that period, Reallysec will at its option correct the Software or refund the
-fees you paid for the nonconforming Software, in which case your License ends.
-**This is your sole and exclusive remedy for breach of this warranty.** The
-warranty does not apply to the Community Edition, trial Licenses, preview
-features, or problems caused by modification, misuse, or an environment the
-Documentation does not support.
+For a paid License, Reallysec warrants that during the Subscription Term the
+Software will perform substantially as described in the Documentation. If it
+does not, and you notify Reallysec with enough detail to reproduce the problem,
+Reallysec will use commercially reasonable efforts to correct the Software. If
+Reallysec cannot do so within a reasonable time, either party may terminate the
+affected License, and Reallysec will refund the prepaid fees for the remainder
+of the Subscription Term. **This is your sole and exclusive remedy for breach
+of this warranty.** The warranty does not apply to the Community Edition, trial
+Licenses, preview features, or problems caused by modification, misuse, or an
+environment the Documentation does not support.
 
 ### 9.2 Disclaimer
 
@@ -153,7 +201,37 @@ be inaccurate and must be reviewed before you rely on it. The Software supports,
 and does not replace, your own security controls, monitoring, and professional
 judgment.**
 
-## 10. Limitation of Liability
+## 10. Intellectual Property Indemnity
+
+10.1 If a third party claims that the Software, as delivered by Reallysec and
+used in accordance with this Agreement, infringes that party's patent,
+copyright, or trademark, or misappropriates its trade secret, Reallysec will
+defend you against the claim and pay the damages and costs finally awarded
+against you, or a settlement that Reallysec approves. This applies only to a
+paid License, and only if you (a) notify Reallysec of the claim promptly in
+writing, (b) give Reallysec sole control of the defence and any settlement, and
+(c) provide reasonable cooperation at Reallysec's expense.
+
+10.2 If the Software is, or Reallysec reasonably believes it may become, the
+subject of such a claim, Reallysec may obtain the right for you to keep using
+it, modify or replace it so that it no longer infringes while providing
+substantially equivalent functionality, or, if neither is commercially
+reasonable, terminate the affected License and refund the prepaid fees for the
+remainder of the Subscription Term.
+
+10.3 **Reallysec has no obligation under this Section for claims arising from:
+third-party and open-source components (Section 5); output generated with
+language models; modification of the Software by anyone other than Reallysec;
+combination of the Software with products, data, or processes not provided by
+Reallysec, where the claim would not exist without the combination; use of a
+version other than the current one, where the current one would have avoided
+the claim; or use in breach of this Agreement.**
+
+10.4 **This Section states Reallysec's entire liability, and your exclusive
+remedy, for third-party intellectual property claims. Reallysec's obligations
+under this Section are subject to Section 11.**
+
+## 11. Limitation of Liability
 
 **To the maximum extent permitted by law, Reallysec is not liable for any
 indirect, incidental, special, consequential, or punitive damages, or for any
@@ -164,25 +242,51 @@ of such damages.**
 Agreement, under any theory of liability, will not exceed the fees you actually
 paid to Reallysec for the Software in the twelve (12) months before the event
 giving rise to the claim. For the Community Edition or a trial License this
-amount is zero.**
+amount is one thousand Chinese yuan (RMB 1,000).**
 
 This section does not exclude liability for personal injury caused by
 Reallysec, for property damage caused by Reallysec's intent or gross
 negligence, or any other liability that cannot be excluded by law.
 
-## 11. Term and Termination
+## 12. Confidentiality
+
+Each party will keep confidential the non-public information that the other
+party discloses in connection with this Agreement and that is marked as
+confidential or would reasonably be understood to be confidential. The
+receiving party will use it only to perform this Agreement or exercise its
+rights under it, and will protect it with at least reasonable care. Your Data
+that Reallysec receives during support, your License, the sealed modules and
+their keys, and non-public pricing are confidential information. This Section
+does not apply to information that is or becomes public through no fault of the
+receiving party, was already known to it, is independently developed by it, or
+must be disclosed by law; in the last case, the receiving party will notify the
+other party where the law permits.
+
+## 13. Term and Termination
 
 This Agreement takes effect when you first install or use the Software and
-continues until your License expires or this Agreement is terminated. When a
-paid or trial License expires, the Software continues as the Community Edition
-under Section 2. Reallysec may terminate this Agreement if you breach Section 3
-or fail to pay applicable fees and do not cure the breach within thirty (30)
-days of notice.
+continues until it is terminated. When a paid or trial License expires, the
+Software continues as the Community Edition under Sections 2 and 7. Reallysec
+may terminate this Agreement if you breach Section 3 or fail to pay applicable
+fees and do not cure the breach within thirty (30) days of notice.
 
-On termination you must stop using the Software and destroy all copies.
-Sections 3, 4, 8, 9.2, 10, 12, and 13 survive termination.
+On termination you must stop using the Software and destroy all copies, and
+Reallysec may revoke your License. You may keep running the Software for up to
+thirty (30) days after termination solely to export Your Data. Sections 2
+(the indemnity for claims by Your Customers), 3, 4, 8, 9.2, 10.3, 10.4, 11, 12,
+13, 15, and 16 survive termination.
 
-## 12. Governing Law and Disputes
+## 14. Changes to this Agreement
+
+Reallysec may update this Agreement. Each version of the Software is delivered
+with the Agreement that applies to it, and the version number and effective
+date appear at the top. For a paid License, the Agreement in effect when your
+Subscription Term starts applies until that term ends, and an updated Agreement
+applies from your next renewal. For the Community Edition and trials, an updated
+Agreement applies when you install, or upgrade to, a version of the Software
+that includes it.
+
+## 15. Governing Law and Disputes
 
 This Agreement is governed by the laws of the People's Republic of China,
 excluding its conflict-of-laws rules. The parties will first try to resolve any
@@ -192,7 +296,7 @@ Hefei Arbitration Commission for arbitration under its rules then in effect. The
 seat of arbitration is Hefei, Anhui Province, and the language of arbitration
 is Chinese. The award is final and binding on both parties.
 
-## 13. General
+## 16. General
 
 - **Entire agreement.** This Agreement, together with your Order, is the entire
   agreement between you and Reallysec regarding the Software and supersedes all
@@ -202,6 +306,10 @@ is Chinese. The award is final and binding on both parties.
   Reallysec's written consent, except to a successor to all or substantially all
   of your business that agrees to this Agreement. Reallysec may assign this
   Agreement to an affiliate or a successor to its business.
+- **Export control.** You will comply with the export control and sanctions
+  laws that apply to you and to the Software, including the Export Control Law
+  of the People's Republic of China, and will not export, re-export, or
+  transfer the Software in violation of them.
 - **Force majeure.** Neither party is liable for a delay or failure to perform,
   other than a payment obligation, caused by events beyond its reasonable
   control.
@@ -211,8 +319,8 @@ is Chinese. The award is final and binding on both parties.
 - **Severability and waiver.** If any provision is held unenforceable, the
   remaining provisions remain in effect. Failure to enforce a provision is not a
   waiver.
-- **Language.** This Agreement is provided in English and Chinese. If the two
-  versions conflict, the English version prevails.
+- **Language.** This Agreement is provided in Chinese and English. If the two
+  versions conflict, the Chinese version prevails.
 
 Contact: https://reallysec.com
 
@@ -220,7 +328,7 @@ Contact: https://reallysec.com
 
 # SignalDesk 最终用户许可协议
 
-版本 1.0 · 生效日期 2026-10-02
+版本 1.1 · 生效日期 2026-10-02
 
 本《最终用户许可协议》（「本协议」）由安徽斯普朗克信息技术有限公司（Anhui
 Reallysec Information Technology Ltd.，「版权人」）与安装或使用本软件的个人
@@ -229,7 +337,8 @@ Reallysec Information Technology Ltd.，「版权人」）与安装或使用本�
 「您」指该单位。
 
 **请您特别注意本协议中以加粗方式标示的条款。这些条款限制版权人的担保与赔偿
-责任，并限制您使用本软件的方式。**
+责任，限制您使用本软件的方式，并规定您用本软件为自己的客户提供服务时应承担的
+责任。**
 
 ## 一、定义
 
@@ -241,10 +350,13 @@ Reallysec Information Technology Ltd.，「版权人」）与安装或使用本�
   节点数、用户数及期限。
 - **「版本」**：社区版、企业版或试用。企业版及试用以许可载明为准；
   未使用许可时即为社区版。
+- **「企业功能」**：仅在取得许可后方可使用的功能，包括以密封模块形式交付的功能。
+- **「订阅期」**：付费许可在许可或订单中载明的期限。
 - **「用户」**：本软件中启用中的、服务门户客户账号以外的账号。服务门户客户账号，
   以及已停用或已删除的账号，不计入用户。
 - **「订单」**：您据以取得许可的报价单、采购订单或其他文件。
 - **「您的数据」**：本软件代您处理的工单、告警及其他数据。
+- **「您的客户」**：您使用多租户版本向其提供托管服务的第三方。
 
 ## 二、许可授予
 
@@ -253,29 +365,40 @@ Reallysec Information Technology Ltd.，「版权人」）与安装或使用本�
 及用户数不超过许可允许的数量，功能以您的版本为限。您的员工及外包人员可代表您
 使用本软件，您对其遵守本协议的情况负责。
 
-您的版本包含多租户功能的，「内部业务运营」包括向您自己的客户提供托管安全或 IT
-服务，包括为其开设服务门户客户账号。
+您可以在自有硬件上运行本软件，也可以在由您控制、由云服务商或托管服务商代您运营
+的基础设施上运行本软件，但该服务商不得为其自身目的使用本软件。
+
+您的版本包含多租户功能的，「内部业务运营」包括向您的客户提供托管安全或 IT
+服务，包括为其开设服务门户客户账号。**您对向您的客户提供的服务、您与其订立的
+协议以及其对本软件的使用独自承担责任。因该等服务引起的、由您的客户向版权人提出
+的索赔，由您负责赔偿版权人，但索赔系因版权人违反本协议所致的部分除外。**
 
 试用许可授予同等权利，但仅限于评估用途，期限以许可载明的试用期为准。
 
 未使用许可时，版权人免费、不定期限地授予您同等许可，但功能以社区版为限，用户数
-不超过五（5）个，节点数为一。版权人可在本软件后续版本中调整社区版的功能。
+不超过五（5）个，节点数为一。在上述限制内，社区版可用于商业目的，但仅限于您自己
+的内部业务运营。版权人可在本软件后续版本中调整社区版的功能。
 
 ## 三、限制
 
 **您不得、亦不得允许任何第三方：**
 
-1. **移动、更改、禁用或规避许可密钥功能，或移除、遮蔽受许可密钥保护的任何
-   功能；**
+1. **绕过、禁用、篡改或干扰许可校验、许可密钥或使企业功能保持锁定的机制，或使用
+   您的许可未涵盖的任何企业功能；**
 2. **对密封的功能模块或本软件的任何其他部分进行解密、反编译、反汇编或反向工程，
    但适用法律明确允许且不受本限制约束的除外；**
-3. **除第二条就多租户版本允许的情形外，以托管服务或代管服务形式向第三方提供
-   本软件，或以其他方式使第三方得以使用本软件的主要功能；**
+3. **除第二条就多租户版本允许的情形外，以托管、代管或软件即服务的形式向第三方
+   提供本软件或其主要功能；**
 4. **出售、出租、租赁、出借、再许可、分发或以其他方式转让本软件或许可，但经
    版权人书面同意的除外；**
 5. **在超出许可允许范围的节点、用户、主机或组织之间共用同一许可；**
-6. **移除、更改或遮蔽本软件中的任何版权、商标、许可或其他声明；**
-7. **违反适用法律（包括出口管制及数据保护法律）使用本软件。**
+6. **删除、更改或隐藏本软件中的任何版权、商标或许可声明；**
+7. **利用本软件，或从其密封模块、文档或非公开行为中获取的信息，开发或协助他人
+   开发与本软件构成竞争的产品或服务；**
+8. **违反适用法律（包括出口管制及数据保护法律）使用本软件。**
+
+您可以对本软件进行基准测试和性能测试。公开测试结果的，须同时公开本软件版本、
+配置及测试方法，以便他人复现。
 
 ## 四、权利归属
 
@@ -301,8 +424,20 @@ Reallysec Information Technology Ltd.，「版权人」）与安装或使用本�
   您的版本包含离线激活时，离线激活不发送任何数据。
 - **大模型。** 本软件将提示词（可能包含您的数据的一部分）发送至您配置的大模型
   端点。该等端点由您或您选择的服务商依据其自身条款提供，版权人不接收该等数据。
+  **大模型生成的内容可能不完整或不正确，相同输入也可能得到不同输出。对于大模型
+  生成的分析、报告及建议操作，您须在据以采取行动前由具备相应能力的人员审核。
+  您对与大模型服务商之间的协议负责，并负责遵守向其发送数据所适用的法律，包括
+  个人信息保护及数据出境的相关规定。**
+- **支持访问。** 您为获取支持而允许版权人访问您的环境或您的数据的，版权人仅为
+  提供您所请求的支持而使用该访问权限，依第十二条对您的数据保密，并且在支持完成后
+  不保留副本，但经您同意的除外。
 
-## 七、更新、支持与预览功能
+## 七、许可校验、更新、支持与预览功能
+
+**付费许可或试用许可在激活时接受校验；在线激活的，此后还会定期校验。校验失败且
+未在宽限期内解决，或许可到期、被吊销的，企业功能停止工作，本软件按社区版继续
+运行，并受社区版的限制。您的数据不会被删除，您仍可读取和导出。使用企业功能产生
+的记录保留在您的数据库中，但在重新应用有效许可之前，该等功能不能再使用。**
 
 版权人可在许可期限内提供更新，并可自行决定为社区版提供更新。支持、服务水平及
 维护仅依据您的订单或单独的支持协议提供。
@@ -313,18 +448,21 @@ Reallysec Information Technology Ltd.，「版权人」）与安装或使用本�
 ## 八、用量核验
 
 经版权人书面要求（每十二（12）个月不超过一次），您应在三十（30）日内提供经您
-授权代表签署的书面说明，载明本软件的安装节点数、用户数及所用版本。如该说明显示
-使用超出许可范围，您应按版权人届时有效的价目表支付超出部分的费用。
+授权代表签署的书面说明，载明本软件的安装节点数、用户数及所用版本。版权人亦可
+依据其许可服务保存的激活记录进行核验。核验显示使用超出许可范围的，您应按版权人
+届时有效的价目表支付超出部分的费用；超出部分超过百分之五（5%）的，您还应承担
+版权人为核验支出的合理费用。
 
 ## 九、担保
 
 ### （一）有限担保
 
-对于付费许可，版权人担保：自许可首次签发之日起九十（90）日内，本软件的运行与
-文档描述基本相符。如不相符且您在该期限内通知版权人，版权人可选择修正本软件，
-或退还您为不相符软件支付的费用（此时您的许可终止）。**上述措施是您就违反本担保
-可获得的唯一救济。** 本担保不适用于社区版、试用许可、预览功能，以及因修改、误用
-或在文档未支持的环境中运行而导致的问题。
+对于付费许可，版权人担保：在订阅期内，本软件的运行与文档描述基本相符。如不相符
+且您提供了足以复现问题的信息并通知版权人，版权人将尽商业上合理的努力修正本软件。
+版权人未能在合理期限内修正的，任何一方均可终止受影响的许可，版权人将退还订阅期
+剩余部分的预付费用。**上述措施是您就违反本担保可获得的唯一救济。** 本担保不适用
+于社区版、试用许可、预览功能，以及因修改、误用或在文档未支持的环境中运行而导致
+的问题。
 
 ### （二）免责声明
 
@@ -334,7 +472,27 @@ Reallysec Information Technology Ltd.，「版权人」）与安装或使用本�
 由大模型生成的内容可能不准确，您在依赖前须自行审核。本软件是您自身安全控制、
 监测及专业判断的辅助工具，不能替代之。**
 
-## 十、责任限制
+## 十、知识产权侵权补偿
+
+（一）如第三方主张版权人交付的、依本协议使用的本软件侵犯其专利权、著作权或
+商标权，或侵犯其商业秘密，版权人将为您就该主张进行抗辩，并支付最终判定由您承担
+的赔偿及费用，或经版权人同意的和解金额。本款仅适用于付费许可，且以您满足下列
+条件为前提：（1）及时书面通知版权人；（2）由版权人独自控制抗辩及和解；（3）在
+版权人承担费用的前提下提供合理协助。
+
+（二）本软件已成为或经版权人合理判断可能成为前述主张的对象的，版权人可为您取得
+继续使用的权利，或修改、替换本软件使其不再侵权且功能基本相当；以上均不具备商业
+合理性的，版权人可终止受影响的许可，并退还订阅期剩余部分的预付费用。
+
+（三）**因下列情形引起的主张，版权人不承担本条项下的义务：第三方及开源组件
+（第五条）；大模型生成的内容；版权人以外的任何人对本软件的修改；本软件与非版权人
+提供的产品、数据或流程结合使用，且不结合使用即不会产生该主张；使用非最新版本，
+而使用最新版本即可避免该主张；违反本协议的使用。**
+
+（四）**本条规定了版权人就第三方知识产权主张承担的全部责任，也是您就此可获得的
+唯一救济。版权人在本条项下的义务受第十一条约束。**
+
+## 十一、责任限制
 
 **在法律允许的最大范围内，对于任何间接的、附带的、特殊的、后果性的或惩罚性的
 损害，或任何利润、收入、数据或业务损失，版权人均不承担责任，即使已被告知该等
@@ -342,40 +500,61 @@ Reallysec Information Technology Ltd.，「版权人」）与安装或使用本�
 
 **版权人因本协议引起或与之相关的全部累计赔偿责任（无论基于何种法律理论），不
 超过引起索赔的事件发生前十二（12）个月内您就本软件实际向版权人支付的费用总额。
-社区版或试用许可的该金额为零。**
+社区版或试用许可的该金额为人民币一千元（RMB 1,000）。**
 
 本条不排除版权人造成人身损害的责任、因故意或者重大过失造成财产损失的责任，
 以及其他依法不得排除的责任。
 
-## 十一、期限与终止
+## 十二、保密
 
-本协议自您首次安装或使用本软件之时生效，持续至您的许可到期或本协议终止。付费
-许可或试用许可到期后，本软件依第二条按社区版继续使用。如您违反第三条或未支付
-相应费用，且在收到通知后三十（30）日内未予纠正，版权人可终止本协议。
+任何一方对另一方因本协议披露的、标明为保密或按常理应理解为保密的非公开信息负有
+保密义务。接收方仅为履行本协议或行使本协议项下的权利而使用该等信息，并至少以合理
+的注意程度加以保护。版权人在提供支持过程中接触到的您的数据、您的许可、密封模块
+及其密钥以及非公开价格，均属保密信息。下列信息不适用本条：非因接收方过错已经或
+成为公开的信息；接收方事先已知悉的信息；接收方独立开发的信息；依法必须披露的
+信息，此种情形下接收方应在法律允许的范围内通知另一方。
 
-本协议终止后，您须停止使用本软件并销毁全部副本。第三条、第四条、第八条、第九条
-第（二）款、第十条、第十二条及第十三条在本协议终止后继续有效。
+## 十三、期限与终止
 
-## 十二、适用法律与争议解决
+本协议自您首次安装或使用本软件之时生效，持续至本协议终止。付费许可或试用许可
+到期后，本软件依第二条及第七条按社区版继续运行。如您违反第三条或未支付相应费用，
+且在收到通知后三十（30）日内未予纠正，版权人可终止本协议。
+
+本协议终止后，您须停止使用本软件并销毁全部副本，版权人可吊销您的许可。终止后
+三十（30）日内，您可以仅为导出您的数据而继续运行本软件。第二条（关于您的客户
+所提索赔的赔偿）、第三条、第四条、第八条、第九条第（二）款、第十条第（三）款及
+第（四）款、第十一条、第十二条、第十三条、第十五条及第十六条在本协议终止后继续
+有效。
+
+## 十四、协议变更
+
+版权人可更新本协议。本软件的每个版本均随附适用于该版本的协议，版本号及生效日期
+载于协议开头。对于付费许可，订阅期开始时有效的协议适用至该订阅期届满，更新后的
+协议自您下次续订时起适用。对于社区版及试用，更新后的协议自您安装或升级至包含
+该协议的本软件版本时起适用。
+
+## 十五、适用法律与争议解决
 
 本协议适用中华人民共和国法律（不含法律冲突规则）。因本协议引起的或与本协议
 有关的任何争议，双方应首先通过友好协商解决。协商不成的，任何一方均有权将争议
 提交至合肥仲裁委员会，按照其届时有效的仲裁规则进行仲裁。仲裁地点为安徽省合肥
 市，仲裁语言为中文。仲裁裁决为终局裁决，对双方均有约束力。
 
-## 十三、其他
+## 十六、其他
 
 - **完整协议。** 本协议与您的订单共同构成您与版权人之间就本软件达成的完整
   协议，并取代此前的一切约定。订单与本协议冲突的，以订单为准。
 - **转让。** 未经版权人书面同意，您不得转让本协议或许可，但转让给承继您全部
   或实质全部业务并同意本协议的承继方的除外。版权人可将本协议转让给其关联方或
   业务承继方。
+- **出口管制。** 您应遵守适用于您及本软件的出口管制与制裁法律，包括《中华人民
+  共和国出口管制法》，不得违反该等法律出口、再出口或转让本软件。
 - **不可抗力。** 任何一方因超出其合理控制的事件导致迟延履行或不能履行的（付款
   义务除外），不承担责任。
 - **通知。** 致版权人的通知发送至您订单载明的联系地址；订单未载明的，发送至
   info@reallysec.com。致您的通知发送至您订单或许可载明的联系方式。
 - **可分割与弃权。** 任何条款被认定为不可执行的，不影响其余条款的效力。任何一
   方未行使某项条款，不构成对该条款的放弃。
-- **语言。** 本协议以中英文两种文本提供，两种文本如有冲突，以英文文本为准。
+- **语言。** 本协议以中英文两种文本提供，两种文本如有冲突，以中文文本为准。
 
 联系方式：https://reallysec.com

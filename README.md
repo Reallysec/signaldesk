@@ -131,7 +131,7 @@ Assignment scoring and rule evaluation ship as encrypted modules; decryption key
 </p>
 
 - Ingress: the analyst browser and the alert webhooks, both on one port (3000, or 443 behind your reverse proxy).
-- Egress, all optional: the AI provider you configure, your notification channels, and `license.reallysec.com`: licence heartbeats for Enterprise Edition (not with an offline licence) and, for every edition, a daily check of the public release feed that sends only the product id and version (`SIGNALDESK_UPDATE_CHECK=0` turns it off).
+- Egress, all optional: the AI provider you configure, your notification channels, `license.reallysec.com` for Enterprise Edition licence heartbeats (not with an offline licence), and GitHub, from which every edition except offline-licensed installs downloads the signed release manifest once a day to check for updates; nothing is sent to Reallysec (`SIGNALDESK_UPDATE_CHECK=0` turns it off).
 - Tickets, alerts and audit trail stay in your PostgreSQL; attachments on local disk or your own S3 / MinIO.
 - Every login, ticket change, AI call and settings change is an audit event.
 

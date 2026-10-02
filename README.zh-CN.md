@@ -131,7 +131,7 @@ HTTPS、反向代理、升级、备份与全部 `.env` 项：[文档](https://re
 </p>
 
 - 入站：分析员浏览器与告警 webhook，共用一个端口（3000，或反向代理后的 443）。
-- 出站，全部可选：你配置的 AI 厂商、你的通知渠道，以及 `license.reallysec.com`：企业版的许可心跳（离线许可证不需要），以及各版本每天一次的发版源查询，只发产品标识和版本号（`SIGNALDESK_UPDATE_CHECK=0` 可关闭）。
+- 出站，全部可选：你配置的 AI 厂商、你的通知渠道，企业版许可心跳用到的 `license.reallysec.com`（离线许可证不需要），以及 GitHub：除离线许可证外，各版本每天从 GitHub 下载一次签名的发版清单检查更新，不向 Reallysec 发送任何数据（`SIGNALDESK_UPDATE_CHECK=0` 可关闭）。
 - 工单、告警与审计记录留在你的 PostgreSQL 里；附件存本地磁盘或你自己的 S3 / MinIO。
 - 每一次登录、工单变更、AI 调用和设置变更都是一条审计事件。
 

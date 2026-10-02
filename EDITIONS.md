@@ -130,7 +130,7 @@ capabilities activate.
 
 **Can I run Community Edition air-gapped?**
 Yes. Community Edition never contacts a license server for licensing. Its only
-outbound call is a daily check of the public release feed for a newer version,
-sending the product id and the running version; set `SIGNALDESK_UPDATE_CHECK=0`
+outbound call is a daily download of the signed release manifest from GitHub
+to check for a newer version, which sends nothing to Reallysec; set `SIGNALDESK_UPDATE_CHECK=0`
 to turn it off and upgrade with the delivery bundle instead. Enterprise Edition
 supports offline licensing; an offline-activated install never phones home.

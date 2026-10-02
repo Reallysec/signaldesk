@@ -122,13 +122,16 @@ limits your rights under those licenses.
 The Software runs in your environment. Your Data stays under your control, and
 you are responsible for it, including under applicable data protection laws.
 
-- **License and update service.** To activate and validate the License and to
-  offer updates, the Software sends Reallysec's license service the license
-  identifier, the product identifier and version, a hashed host fingerprint
-  derived from machine identifiers, and activation status. Without a License,
-  the Software sends only the product identifier and version, to check for
-  updates. It does not send Your Data. Offline activation, where your Edition
+- **License service.** To activate and validate the License, the Software sends
+  Reallysec's license service the license identifier, the product identifier
+  and version, a hashed host fingerprint derived from machine identifiers, and
+  activation status. It does not send Your Data. Without a License, the Software
+  does not contact the license service. Offline activation, where your Edition
   includes it, sends nothing.
+- **Update checks.** Unless you turn them off or use an offline License, the
+  Software downloads a signed release file from the public GitHub Releases
+  page of the Software once a day to check for updates. This sends no
+  information to Reallysec.
 - **Language models.** The Software sends prompts, which may include portions of
   Your Data, to the language-model endpoints you configure. Those endpoints are
   provided by you or your chosen provider under their own terms; Reallysec does
@@ -418,10 +421,13 @@ Reallysec Information Technology Ltd.，「版权人」）与安装或使用本�
 本软件运行于您的环境中。您的数据处于您的控制之下并由您负责，包括在适用的数据
 保护法律项下的责任。
 
-- **许可与更新服务。** 为激活和校验许可并提供更新，本软件向版权人的许可服务
-  发送许可标识、产品标识及版本、由机器标识生成的主机指纹哈希值以及激活状态。
-  未使用许可时，本软件仅为检查更新发送产品标识及版本。本软件不发送您的数据。
-  您的版本包含离线激活时，离线激活不发送任何数据。
+- **许可服务。** 为激活和校验许可，本软件向版权人的许可服务发送许可标识、产品
+  标识及版本、由机器标识生成的主机指纹哈希值以及激活状态。本软件不发送您的数据。
+  未使用许可时，本软件不联系许可服务。您的版本包含离线激活时，离线激活不发送
+  任何数据。
+- **更新检查。** 除非您关闭更新检查或使用离线许可，本软件每天从本软件在 GitHub
+  上的公开发布页面下载一次签名的发版文件，以检查是否有更新。此过程不向版权人
+  发送任何信息。
 - **大模型。** 本软件将提示词（可能包含您的数据的一部分）发送至您配置的大模型
   端点。该等端点由您或您选择的服务商依据其自身条款提供，版权人不接收该等数据。
   **大模型生成的内容可能不完整或不正确，相同输入也可能得到不同输出。对于大模型

@@ -15,7 +15,7 @@ unlocks all of Enterprise.
 | Price | Free | Quote |
 | Active staff users | 5 | Unlimited |
 | Tickets & alerts | Unlimited | Unlimited |
-| Support | Community | 24×7 |
+| Support | Community | Priority |
 
 Legend: ● included · ○ not included · ◐ on the roadmap (not yet shipped)
 
@@ -76,7 +76,7 @@ Legend: ● included · ○ not included · ◐ on the roadmap (not yet shipped)
 | Multi-tenant / MSSP — customer tenants, tenant switching, cross-tenant views | ○ | ● |
 | Custom roles & fine-grained permissions | ○ | ◐ |
 
-**Security is never a paid feature.** Two-factor auth, password policy, CSRF
+**Core security is never a paid feature.** Two-factor auth, password policy, CSRF
 protection, rate limiting, and audit logging are in Community Edition and will
 stay there.
 

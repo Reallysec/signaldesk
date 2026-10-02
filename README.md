@@ -7,7 +7,7 @@
 <p align="center">
   <b>Turn alerts into tickets your SOC can close.</b><br>
   A self-hosted ticketing workspace for security operations, fed by Splunk, Elasticsearch, Wazuh and generic webhooks:<br>
-  SLA timers, playbooks, AI analysis and closing reports. Security features are never paywalled, every AI call audited.
+  SLA timers, playbooks, AI analysis and closing reports. Core security features are never paywalled, every AI call audited.
 </p>
 
 <p align="center">
@@ -31,7 +31,7 @@
 - **Alerts arrive as tickets.** Point Splunk, Elasticsearch, Wazuh or any webhook at it. Duplicates are merged, related alerts are correlated to the same entity, and alert storms are suppressed before they flood the queue.
 - **SLA clocks the team can trust.** Response and resolution targets per priority, business calendars, the clock paused while a ticket waits on someone else, warnings before a breach.
 - **AI where it helps, on your terms.** On-demand analysis and closing reports on 11 built-in providers, any OpenAI-compatible endpoint or a local model. Every model call is audited.
-- **Security is never a paid feature.** Two-factor auth, password policy, CSRF protection, rate limiting and audit logging are all in the free Community Edition.
+- **Core security is never a paid feature.** Two-factor auth, password policy, CSRF protection, rate limiting and audit logging are all in the free Community Edition.
 
 ## Quick start
 
@@ -92,7 +92,7 @@ Everything below is in the free Community Edition: up to 5 staff users, no limit
 
 ## Commercial editions
 
-Enterprise adds the automation layer: **multi-level escalation** (L1 → L2 → L3 with group targets), **skill-matched and customer-owner assignment**, an **automation rule engine** with 7 trigger types, **automatic AI triage** on ticket creation, **AI guardrails**, **scheduled reports** and unlimited audit retention, plus **SSO** (SAML, OIDC, OAuth2, LDAP), **SCIM** provisioning and **multi-tenancy** for MSSPs. Every edition runs the same image: to upgrade, set the licence token and restart; data stays where it is.
+Enterprise adds the automation layer: **multi-level escalation** (L1 → L2 → L3 with group targets), **skill-matched and customer-owner assignment**, an **automation rule engine** with 7 trigger types, **automatic AI triage** on ticket creation, **AI guardrails**, **scheduled reports** and unlimited audit retention, plus **SSO** (SAML, OIDC, OAuth2, LDAP), **SCIM** provisioning and **multi-tenancy** for MSSPs. Every edition runs the same image: to upgrade, import the licence in Settings › License, with no reinstall and data staying where it is (or set `RSTLIC_LICENSE_TOKEN` and restart).
 
 <table>
   <tr>
@@ -118,7 +118,7 @@ Enterprise adds the automation layer: **multi-level escalation** (L1 → L2 → 
 | SSO: SAML, OIDC, OAuth2, LDAP sync | — | ✅ |
 | SCIM user provisioning | — | ✅ |
 | Multi-tenant / MSSP: customer tenants, tenant switching, cross-tenant views | — | ✅ |
-| Support | community | 24×7 |
+| Support | community | priority |
 
 Assignment scoring and rule evaluation ship as encrypted modules; decryption keys are issued per host by the licence server. Details: [EDITIONS.md](EDITIONS.md). A 14-day trial unlocks every Enterprise feature: [console.reallysec.com](https://console.reallysec.com).
 

@@ -46,7 +46,7 @@ services:
 
   app:
     # 在线更新的核心:镜像 tag 由 rst-update.sh 在 .env 里切换。
-    image: ${IMAGE_REPO:-ghcr.io/reallysec/signaldesk}:${APP_IMAGE_TAG:-1.1.1}
+    image: ${IMAGE_REPO:-ghcr.io/reallysec/signaldesk}:${APP_IMAGE_TAG:-1.1.2}
     restart: unless-stopped
     # 主机指纹(SEC-FP-1):2026-09-15 起容器 MAC(本地管理地址)不再进指纹,容器指纹由
     # ./data/license/license.json 里的 install secret 承载 —— 所以 ./data 必须是持久卷,

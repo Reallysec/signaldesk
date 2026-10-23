@@ -39,6 +39,8 @@ Legend: ● included · ○ not included · ◐ on the roadmap (not yet shipped)
 | Business calendars, clock pause while `PENDING` | ● | ● |
 | Manual assignment, round-robin, least-loaded | ● | ● |
 | Multi-level escalation (L1 → L2 → L3) with group targets | ○ | ● |
+| On-call schedules, cover shifts, paging with acknowledgement and MTTA, shift handovers | ● | ● |
+| Multi-layer on-call paging (secondary and beyond) and the "current on-call" escalation target | ○ | ● |
 | Skill-matched & customer-owner assignment with load scoring | ○ | ● |
 | Automation rule engine (7 trigger types) | ○ | ● |
 
@@ -51,6 +53,9 @@ Legend: ● included · ○ not included · ◐ on the roadmap (not yet shipped)
 | AI call auditing | ● | ● |
 | Automatic AI triage on ticket creation | ○ | ● |
 | AI guardrails — output limits, sensitive-word masking, per-tenant quota | ○ | ● |
+| Telegram on-call notices (one topic per ticket, messages labeled as AI) | ● | ● |
+| AI investigation with read-only AWS / Splunk tools | ○ | ● |
+| AI response actions — policy engine, human approval, kill switch, auto-rollback | ○ | ● |
 
 ## Collaboration & knowledge
 

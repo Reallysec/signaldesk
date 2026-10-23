@@ -46,7 +46,7 @@ services:
 
   app:
     # 在线更新的核心:镜像 tag 由 rst-update.sh 在 .env 里切换。
-    image: ${IMAGE_REPO:-ghcr.io/reallysec/signaldesk}:${APP_IMAGE_TAG:-1.1.2}
+    image: ${IMAGE_REPO:-ghcr.io/reallysec/signaldesk}:${APP_IMAGE_TAG:-1.2.0}
     restart: unless-stopped
     # 主机指纹(SEC-FP-1):2026-09-15 起容器 MAC(本地管理地址)不再进指纹,容器指纹由
     # ./data/license/license.json 里的 install secret 承载 —— 所以 ./data 必须是持久卷,
@@ -116,11 +116,30 @@ services:
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
+        # 启动后先等 app 就绪（最多 30 分钟）再做第一次备份。app 就绪 = 数据库迁移已跑完：
+        # 升级时 compose 会同时重启这里，pg_dump 一上来就持有全部表的锁，迁移只能干等它导完。
+        # 备份先写 .part，gzip -t 校验通过才改成正式文件名：被中途杀掉（升级时 compose 重建本容器）
+        # 只会留下 .part，不会留下一个看着正常、还原时却丢数据的 .sql.gz。
+        # sleep / pg_dump 都放后台再 wait：sh 做 PID 1 时，前台命令跑完才处理信号，trap 才能及时生效。
+        PART=""
+        trap 'echo "[Backup] stopping"; [ -n "$$PART" ] && rm -f "$$PART"; exit 0' TERM INT
+        # 1.1.x 的备份命令直接写 .sql.gz，升级时被强杀会留下截断的正式文件：启动时校验近两天的备份，
+        # 坏的改名为 .broken，免得有人拿它还原（.broken 按保留期一并清理）
+        for f in $$(find /backups -name "*.sql.gz" -mtime -2); do
+          gzip -t "$$f" 2>/dev/null || { mv "$$f" "$$f.broken"; echo "[Backup] incomplete backup renamed: $$f.broken"; }
+        done
+        i=0
+        until wget -q -T 5 -O /dev/null http://app:3000/api/health/ready || [ "$$i" -ge 180 ]; do i=$$((i + 1)); sleep 10 & wait $$!; done
         while true; do
           FILENAME="/backups/signaldesk_$$(date +%Y%m%d_%H%M%S).sql.gz"
-          if pg_dump | gzip > "$$FILENAME"; then echo "[Backup] Done: $$FILENAME"; else echo "[Backup] FAILED: $$FILENAME"; rm -f "$$FILENAME"; fi
+          PART="$$FILENAME.part"
+          (set -o pipefail; pg_dump | gzip > "$$PART") & wait $$!
+          if [ $$? -eq 0 ] && gzip -t "$$PART"; then mv "$$PART" "$$FILENAME"; echo "[Backup] Done: $$FILENAME"; else echo "[Backup] FAILED: $$FILENAME"; rm -f "$$PART"; fi
+          PART=""
           find /backups -name "*.sql.gz" -mtime +$${BACKUP_RETENTION_DAYS} -delete
-          sleep 86400
+          find /backups -name "*.sql.gz.part" -delete
+          find /backups -name "*.sql.gz.broken" -mtime +$${BACKUP_RETENTION_DAYS} -delete
+          sleep 86400 & wait $$!
         done
 
 volumes:

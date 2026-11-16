@@ -11,7 +11,7 @@
 # 用法(交付包目录内,install.sh 会代做):
 #   cp .env.example .env    # 填 DB_PASSWORD / REDIS_PASSWORD / JWT_SECRET
 #   docker compose up -d
-# 在线更新安装:bash rst-update.sh
+# 在线更新安装:后台「设置 → 在线更新 → 立即安装」(updater 侧车),或宿主 bash rst-update.sh
 #
 # data/ 走宿主 bind mount:release-store 把已验证暂存写到 data/release/,
 # 宿主上的 rst-update.sh 直接读它(current.json + staging/<sha>)。
@@ -46,7 +46,7 @@ services:
 
   app:
     # 在线更新的核心:镜像 tag 由 rst-update.sh 在 .env 里切换。
-    image: ${IMAGE_REPO:-ghcr.io/reallysec/signaldesk}:${APP_IMAGE_TAG:-1.2.4}
+    image: ${IMAGE_REPO:-ghcr.io/reallysec/signaldesk}:${APP_IMAGE_TAG:-1.2.5}
     restart: unless-stopped
     # 主机指纹(SEC-FP-1):2026-09-15 起容器 MAC(本地管理地址)不再进指纹,容器指纹由
     # ./data/license/license.json 里的 install secret 承载 —— 所以 ./data 必须是持久卷,
@@ -85,6 +85,10 @@ services:
       # ./data/license 是激活状态与容器指纹,./uploads 是附件 —— 三者都要进备份。
       - ./data:/app/data
       - ./uploads:/app/uploads
+    # default:数据库 / Redis / 对外端口;updater:只用来调 updater 侧车(internal,不出网)
+    networks:
+      - default
+      - updater
     depends_on:
       postgres:
         condition: service_healthy
@@ -96,6 +100,34 @@ services:
       timeout: 5s
       retries: 5
       start_period: 60s
+
+  # 一键安装的执行端(1.2.5 起)。安全边界:
+  #   - 只有它挂 docker.sock(= 宿主 root),app 不挂;它只做「安装当前已暂存的版本」这一件事。
+  #   - 不发布端口,只在 internal 网络 updater 上让 app 访问;每个请求带 UPDATER_TOKEN(install.sh 生成在 .env)。
+  #   - 装前把暂存文件拷到私有目录,用**当前运行的** app 镜像里的 verify-release 重新验签 + 核对 sha256、
+  #     拒绝降级(docker run --network none,只读挂载),不通过不 docker load。
+  # 安装目录按宿主同一绝对路径挂进来(SIGNALDESK_DIR,默认 /opt/signaldesk):compose 里的相对路径
+  # (./data 等)由 compose CLI 解析成绝对路径交给 dockerd,路径不同就会挂错目录;项目名取本容器的
+  # compose 标签,保证操作的是同一个项目。
+  # 镜像 tag 用独立的 UPDATER_IMAGE_TAG(install.sh 写入,一键安装不改它),绝不在运行中替换 updater 自己:
+  # 一键安装只重建 app(--no-deps app);updater 换新版只在重跑 install.sh 时发生。why 不跟 APP_IMAGE_TAG:
+  # 回滚到 1.2.4 及以前后,完整 docker compose up 会去找不存在的 1.2.4-updater 镜像,离线主机直接中止。
+  updater:
+    image: ${IMAGE_REPO:-ghcr.io/reallysec/signaldesk}-updater:${UPDATER_IMAGE_TAG:-1.0.0}
+    restart: unless-stopped
+    # 不用 env_file:.env 里的数据库 / JWT 等密钥与它无关,只给它需要的几项
+    environment:
+      UPDATER_TOKEN: ${UPDATER_TOKEN:-}
+      SIGNALDESK_DIR: ${SIGNALDESK_DIR:-/opt/signaldesk}
+      COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME:-}
+      IMAGE_REPO: ${IMAGE_REPO:-ghcr.io/reallysec/signaldesk}
+      HEALTH_URL: http://app:3000/api/health
+    working_dir: ${SIGNALDESK_DIR:-/opt/signaldesk}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${SIGNALDESK_DIR:-/opt/signaldesk}:${SIGNALDESK_DIR:-/opt/signaldesk}
+    networks:
+      - updater
 
   # 每日 pg_dump 到 ./backups,保留 30 天;与 docker-compose.prod.yml 同一段。
   # 还原步骤见 docs/operations.md。
@@ -145,3 +177,8 @@ services:
 volumes:
   pg_data:
   redis_data:
+
+networks:
+  # app 与 updater 专用:internal,不出网、不经宿主端口
+  updater:
+    internal: true

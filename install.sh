@@ -126,6 +126,11 @@ say "== $PRODUCT $VERSION -> $DIR"
 
 # ── 解压到固定目录 ────────────────────────────────────────────────────────────
 # 包里没有 .env 和 data/，已有安装的这两样原样保留（data/license 丢了等于换机，离线证会失效）。
+# 在线更新（rst-update.sh / updater 一键安装）正在运行时不能整套重装：两边会同时改 .env、重启 app，
+# 下面还要清掉它的尝试记录。锁在就停下，什么都不动。
+if [ -d "$DIR/.rst-update/lock" ] || [ -d "$DIR/data/release/.lock" ]; then
+  fail "an online update is running (lock $DIR/.rst-update/lock). Wait for it to finish, or if you are sure it is stale (no rst-update.sh / updater install running), remove the lock directory, then re-run."
+fi
 mkdir -p "$DIR"
 rm -f "$DIR"/"$STEM"-images-*.tar
 tar xzf "$ARCHIVE" -C "$DIR" --strip-components=1
@@ -157,6 +162,21 @@ if [ ! -f .env ]; then
 fi
 if grep -q '^APP_IMAGE_TAG=' .env; then sed -i "s|^APP_IMAGE_TAG=.*|APP_IMAGE_TAG=$VERSION|" .env
 else printf 'APP_IMAGE_TAG=%s\n' "$VERSION" >> .env; fi
+# 一键安装（updater 侧车，1.2.5 起）：app 与 updater 的共享密钥只写进 .env、不打印，已有就不换；
+# 安装目录按同一绝对路径挂进 updater。旧安装重跑本脚本升级时也补上这两项。
+grep -q '^UPDATER_TOKEN=.\{32,\}$' .env || { sed -i '/^UPDATER_TOKEN=/d' .env; echo "UPDATER_TOKEN=$(rand)" >> .env; }
+sed -i '/^SIGNALDESK_DIR=/d' .env; echo "SIGNALDESK_DIR=$(pwd -P)" >> .env
+# updater 镜像版本单独一个键:一键安装只改 APP_IMAGE_TAG,updater 只在重跑本脚本时换新
+sed -i '/^UPDATER_IMAGE_TAG=/d' .env; echo "UPDATER_IMAGE_TAG=$VERSION" >> .env
+# 整套重装后，在线更新留下的记录（未收尾的尝试、迁移基线、上一版）都对不上了：清掉并以本次版本为准。
+# 不提供 --rollback（没有上一版在跑时的迁移基线）；旧位置 data/release 下 1.2.4 以前的记录一并删掉。
+mkdir -p .rst-update && chmod 700 .rst-update
+rm -f .rst-update/attempt.env .rst-update/migrations-pending.txt .rst-update/migrations-before.txt .rst-update/rollback.env
+# data/ 归容器用户所有，data/release 可能被换成指向别处的链接：是链接就不去删里面的东西
+if [ -d data/release ] && [ ! -L data/release ]; then
+  rm -f data/release/installed.json data/release/migrations-before.txt data/release/rollback.env
+fi
+printf '{"installed_version":"%s","previous":"","installed_at":"%s"}\n' "$VERSION" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > .rst-update/installed.json
 
 mkdir -p data uploads backups
 chown -R "$APP_UID:$APP_UID" data uploads
